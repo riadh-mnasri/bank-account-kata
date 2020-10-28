@@ -6,23 +6,26 @@
 	<artifactId>bank-account-kata</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>bank-account-kata</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Bank Account Kata</description>
 
 	<properties>
 		<java.version>11</java.version>
 		<kotlin.version>1.3.72</kotlin.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <junit.platform.version>1.7.0</junit.platform.version>
+        <assertj.version>3.17.2</assertj.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
 		</dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -39,13 +42,24 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.17.2</version>
+            <version>${assertj.version}</version>
         </dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
-		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-		<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+		<sourceDirectory>src/main/kotlin</sourceDirectory>
+		<testSourceDirectory>src/test/kotlin</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -54,14 +68,32 @@
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
-				<configuration>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
 					<args>
 						<arg>-Xjsr305=strict</arg>
 					</args>
 					<compilerPlugins>
 						<plugin>spring</plugin>
 					</compilerPlugins>
-				</configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.jetbrains.kotlin</groupId>
@@ -70,7 +102,27 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
 	</build>
 
 </project>
